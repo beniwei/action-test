@@ -18,3 +18,9 @@
 .chat-choices .scene-story{display:block;background:transparent;padding:0;border-radius:0;color:var(--ink)}
 @media(max-width:600px){.scene-panel h2,.scene-panel .scene-story,.scene-panel .scene-prompt{font-size:17px;line-height:1.85}}
 
+
+/* Scene title is context; the actual question is the primary reading target. */
+.scene-panel h2{font-size:14px;font-weight:400;line-height:1.7;color:var(--muted);margin:18px 0 8px}
+.scene-panel .scene-story{font-size:16px;font-weight:400;line-height:1.8;color:#666d60;margin:0 0 20px}
+.scene-panel .scene-prompt{font-size:23px;font-weight:700;line-height:1.65;color:var(--ink);margin:0 0 25px}
+@media(max-width:600px){.scene-panel h2{font-size:13px}.scene-panel .scene-story{font-size:15px}.scene-panel .scene-prompt{font-size:20px;font-weight:700;line-height:1.7}}

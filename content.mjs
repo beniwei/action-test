@@ -1,3 +1,4 @@
+import {scenes} from './scenes.mjs';
 export const dimensions=['持续专注','干扰应对','注意力切换','目标保持'];
 export const adult=[
 '阅读较长的内容时，我读到后面才发现自己没留意前面写了什么。','即使任务需要持续投入，我也能把注意力保持在当前内容上。','在会议或较长的交谈中，我会漏听一段内容。','做一项持续时间较长的事情时，我的思绪会飘到无关的事情上。','即使内容有些重复，我仍能留意正在处理的信息。','我需要反复重读同一段材料，才能接上它的意思。',
@@ -17,6 +18,7 @@ export const roles=[
 {id:'octopus',emoji:'🐙',name:'忙碌章鱼',quote:'八只手都在忙，先让我找找主线。',desc:'你在多个环节报告了较频繁的困难。先挑一个最想改变的小场景，避免同时改变太多事。'},
 {id:'owl',emoji:'🦉',name:'守线猫头鹰',quote:'别急，我先把这件事收个尾。',desc:'本次回答中，各环节的困难相对少见。留意哪些条件帮助了你，继续保留这些安排。'}];
 export const seed={slug:'attention',title:'你的注意力，是什么动物？',subtitle:'找到脑内的小动物，也找到适合自己的专注方式。',price:990,status:'published',adult,student,roles,report:{intro:'注意力会随任务、环境和近期状态变化。这份报告帮助你观察习惯，不代表固定能力。',advice:['把任务分成有明确产出的小段。读完一节后，用自己的话写下一句摘要。','只减少一种最常见的干扰。临时念头先记在纸上，当前任务结束后再处理。','暂停前写下做到哪里、下一步是什么。回来后先执行记录中的一个动作。','开始前写下这次要完成什么，并给出具体的完成标准。'],plan:['记录一次平常的任务：在哪里被打断？','只减少一种常见干扰，观察体验。','开始前写下一个具体完成目标。','暂停前留下“回来后的第一步”。','将长任务分成几个有产出的小段。','重复本周最有帮助的一种做法。','回顾记录，保留一到两项可持续调整。']}};
+seed.experience=2;seed.adult=scenes.map(s=>s.prompt);
 export function score(answers){
  if(!Array.isArray(answers)||answers.length!==24||answers.some(x=>x!==null&&(!Number.isInteger(x)||x<0||x>4)))throw Error('请完成有效的24道题');
  const scores=dimensions.map((_,d)=>{const a=answers.slice(d*6,d*6+6).map((v,i)=>v===null?null:([1,4].includes(i)?4-v:v)).filter(v=>v!==null);return a.length>=5?Number((a.reduce((s,v)=>s+v,0)/a.length).toFixed(2)):null});

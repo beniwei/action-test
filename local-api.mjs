@@ -4,6 +4,7 @@ function read(){try{return JSON.parse(localStorage.getItem(key))||{passes:[],rep
 function save(s){localStorage.setItem(key,JSON.stringify(s))}
 export async function localApi(path,body){const u=new URL(path,'https://beta.invalid/'),s=read(),p=u.pathname;
 if(p==='catalog'||p==='/catalog')return {version:2,test:{...seed,price:990,status:'published'},dimensions,demo:true};
+if(p==='feedback'||p==='/feedback'){if(!s.passes.some(x=>x.id===body.pass))throw Error('未找到测试记录');if(!['midpoint_reached','continue','pause_selected','pause_reasons','saved_initial'].includes(body.type))throw Error('反馈类型不支持');s.feedback=s.feedback||[];s.feedback.push({pass:body.pass,type:body.type,reasons:body.reasons||[],other:body.other||'',created:new Date().toISOString()});save(s);return {ok:true}}
 if(p==='me'||p==='/me')return s;
 if(p==='prebuy'||p==='/prebuy'){if(body.branch!=='adult')throw Error('仅供18岁及以上成人');let pass=s.passes.find(x=>!x.attempt&&x.version===2);if(!pass){pass={id:id(),branch:'adult',age:'',version:1,attempt:null};s.passes.push(pass);s.orders.push({id:pass.id,amount:990,status:'demo_paid',created:new Date().toLocaleString()});save(s)}return {pass:pass.id,demo:true}}
 if(p==='access'||p==='/access'){const pass=s.passes.find(x=>x.id===u.searchParams.get('pass'));if(!pass)throw Error('请先进入免费内测');return {...pass,pass:pass.id,content:seed}}
